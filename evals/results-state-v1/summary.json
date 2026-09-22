@@ -1,0 +1,24 @@
+[
+  {
+    "model": "luna",
+    "completed_model_replies": 14,
+    "authored_steps": 5,
+    "median_seconds": 2.436,
+    "max_seconds": 18.922,
+    "input": 12022,
+    "output_including_reasoning": 1256,
+    "cached": 0,
+    "estimated_usd": 0.003912
+  },
+  {
+    "model": "gemini",
+    "completed_model_replies": 13,
+    "authored_steps": 1,
+    "median_seconds": 18.855,
+    "max_seconds": 29.62,
+    "input": 10337,
+    "output_including_reasoning": 4510,
+    "cached": 0,
+    "estimated_usd": 0.056095
+  }
+]

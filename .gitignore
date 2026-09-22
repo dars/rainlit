@@ -1,0 +1,15 @@
+.env.local
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.env*
+!.env.example
+
+__pycache__/
+
+.wrangler/
+.dev.vars*
+
+.DS_Store
+*.log

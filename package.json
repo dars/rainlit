@@ -1,0 +1,27 @@
+{
+  "name": "rainlit-cafe",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "build:cloudflare": "RAINLIT_STATIC_EXPORT=1 next build",
+    "deploy": "npm run build:cloudflare && wrangler deploy",
+    "dev:api": "wrangler dev --port 8787",
+    "test:api": "node tests/rain-api.mjs"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5",
+    "wrangler": "^4.136.1"
+  }
+}

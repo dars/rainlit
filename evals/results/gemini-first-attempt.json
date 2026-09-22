@@ -1,0 +1,8 @@
+[
+  {
+    "scenario": 1,
+    "turn": 1,
+    "user": "你好，我是今天來幫忙的店長的兒子。需要幫您續杯嗎？",
+    "error": "TimeoutError"
+  }
+]
