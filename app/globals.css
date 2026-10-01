@@ -88,3 +88,21 @@
 .free-input input:focus{outline:none}
 .free-input button:focus-visible{outline:2px solid var(--amber);outline-offset:-4px}
 @media(forced-colors:active){.free-input:focus-within{border-bottom-color:Highlight;box-shadow:none}.free-input input:focus{outline:2px solid Highlight;outline-offset:-2px}}
+
+/* The relief portrait lasts through farewell, until Rain actually departs. */
+.playing:has(.rain-game.released) .backdrop{background-image:url('/images/rain-table-released-v1.png')}
+
+/* Owner chapter stills; farewell questions precede the two deliberate closing shots. */
+.playing:has(.rain-game.owner) .backdrop{background-image:url('/images/owner-table-v1.png')}
+.playing:has(.rain-game.owner-key) .backdrop{background-image:url('/images/owner-key-v1.png');background-position:center}
+.playing:has(.rain-game.owner-departed) .backdrop{background-image:url('/images/owner-exit-v1.png');background-position:38% center}
+.playing:has(.rain-game.owner-afterword) .backdrop{background-image:url('/images/owner-key-v1.png');background-position:center}
+.cinematic .scene-caption,.cinematic .objects{display:none!important}
+.chapter-note{color:var(--muted);font-size:14px;line-height:1.8}
+@media(max-width:750px), (max-width:1100px) and (orientation:portrait){
+ .playing .cinematic .game-bottom{max-height:40dvh}
+ .playing:has(.rain-game.owner-key) .backdrop,.playing:has(.rain-game.owner-afterword) .backdrop{background-position:49% bottom}
+}
+@media(max-width:750px), (max-width:1100px) and (orientation:portrait){
+ .playing .owner-ready .game-bottom{max-height:52dvh}
+}

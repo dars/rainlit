@@ -1,7 +1,7 @@
 import {advanceOwner,ownerChoices} from './owner';
 import {cafeGuests,canPlayerLeave} from './cafe';
 import type {Action,RainState,Line,Topic} from './types';
-export const initial=():RainState=>({version:1,ownerPhase:null,exitAttempt:false,revision:0,topic:'everyday',boundary:'open',phase:'waiting',rapport:'neutral',apology:false,greeted:false,coffeeAsked:false,umbrellaKnown:false,waitingHeard:false,willing:false,umbrella:'counter',permission:false,read:false,processed:false,attachment:'held',letterUnderstood:false,bondRemembered:false,wantsLeave:false,deathCauseHeard:false,deathKnown:false});
+export const initial=():RainState=>({version:1,ownerPhase:null,ownerVersion:2,ownerAttachment:'held',ownerWantsLeave:false,ownerMotherKnown:false,exitAttempt:false,revision:0,topic:'everyday',boundary:'open',phase:'waiting',rapport:'neutral',apology:false,greeted:false,coffeeAsked:false,umbrellaKnown:false,waitingHeard:false,willing:false,umbrella:'counter',permission:false,read:false,processed:false,attachment:'held',letterUnderstood:false,bondRemembered:false,wantsLeave:false,deathCauseHeard:false,deathKnown:false});
 const say=(text:string):Line=>({speaker:'雨蓉',text});
 const narrate=(text:string):Line=>({speaker:'旁白',text});
 export const welcome=[narrate('窗邊的女人抬起頭，面前放著半杯冷咖啡。'),narrate('她看了你一眼，似乎在等你先開口。')];
@@ -57,7 +57,7 @@ export function advance(old:RainState,action:Action):{state:RainState;lines:Line
  }
  if(s.exitAttempt){
   s.revision++;
-  if(action==='stay'){s.exitAttempt=false;return {state:s,lines:[narrate(s.phase==='departed'?'你回到店裡。窗邊的座位已經空了，更裡頭還傳來翻報紙的聲音。':'你回到窗邊。雨蓉仍坐在原處。')]};}
+  if(action==='stay'){s.exitAttempt=false;return {state:s,lines:[narrate(s.phase==='departed'?(s.ownerPhase==='departed'||s.ownerPhase==='afterword'?'你回到店裡。鑰匙留在桌上，更裡頭還有一位小客人。':s.ownerPhase?'你回到老先生的桌旁。':'你回到店裡。窗邊的座位已經空了，裡面還坐著一位老先生。'):'你回到窗邊。雨蓉仍坐在原處。')]};}
   return {state:s,lines:[narrate('店裡還有客人。你仍留在門內。')]};
  }
  if(s.phase==='departed')return advanceOwner(s,action);
@@ -123,7 +123,7 @@ export function advance(old:RainState,action:Action):{state:RainState;lines:Line
 }
 
 // Legacy saves retain discovered objects and completed story beats.
-export function restore(saved:RainState):RainState{const progressed=saved.willing||saved.phase!=='waiting'||saved.umbrella!=='counter';return {...initial(),...saved,wantsLeave:saved.attachment==='released'?true:(saved.wantsLeave??false),phase:saved.attachment==='released'&&saved.phase!=='departed'?'ready':saved.phase==='ready'&&(!saved.wantsLeave||saved.attachment!=='released')?'processing':saved.phase,greeted:saved.greeted??progressed,coffeeAsked:saved.coffeeAsked??progressed,umbrellaKnown:saved.umbrellaKnown??(saved.umbrella!=='counter'||saved.phase!=='waiting'),waitingHeard:saved.waitingHeard??(saved.willing||saved.phase!=='waiting')};}
+export function restore(saved:RainState):RainState{const progressed=saved.willing||saved.phase!=='waiting'||saved.umbrella!=='counter';return {...initial(),...saved,...(saved.ownerPhase&&saved.ownerVersion!==2?{ownerVersion:2 as const,ownerPhase:'seated' as const,ownerAttachment:'held' as const,ownerWantsLeave:false,ownerMotherKnown:false}:{}),wantsLeave:saved.attachment==='released'?true:(saved.wantsLeave??false),phase:saved.attachment==='released'&&saved.phase!=='departed'?'ready':saved.phase==='ready'&&(!saved.wantsLeave||saved.attachment!=='released')?'processing':saved.phase,greeted:saved.greeted??progressed,coffeeAsked:saved.coffeeAsked??progressed,umbrellaKnown:saved.umbrellaKnown??(saved.umbrella!=='counter'||saved.phase!=='waiting'),waitingHeard:saved.waitingHeard??(saved.willing||saved.phase!=='waiting')};}
 
 export const topics:Topic[]=['everyday','rain','waiting','letter','grief','quiet'];
 // Topic can change suggestion wording, never discoveries, permission, or phase.

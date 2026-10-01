@@ -30,6 +30,6 @@ export default function Home() {
   </section>}
   <footer><span>單人敘事 · 探索 · 自由對話</span><span className="preview">故事試玩 <i/> 早期版本</span></footer>
   {notice&&<p role="status" className="notice">{notice}</p>}
-  <dialog className="about-dialog" aria-labelledby="about-title" ref={dialog} onClick={e=>{if(e.target===dialog.current)dialog.current?.close()}}><div className="dialog-inner"><p className="eyebrow">THE RAINLIT CAFÉ</p><h2 id="about-title" tabIndex={-1}>有些等待，<br/>是為了好好告別。</h2><div className="about-copy"><p>母親過世後，你回到停業七年的咖啡館。<br/>燈還亮著，似乎仍有人在等。</p><p>探索店裡留下的物件，聽客人說話，慢慢拼起那些你未曾知道的日常。</p><p className="content-note">故事包含親人離世與詭異情節。<br/>目前可體驗雨蓉的故事，以及接續的陳伯安前段。自由對話由 AI 演出，進度會保存於此瀏覽器的專屬存檔。完整遊戲尚在製作。</p></div><form method="dialog"><button className="close">回到咖啡館 <ArrowIcon/></button></form></div></dialog>
+  <dialog className="about-dialog" aria-labelledby="about-title" ref={dialog} onClick={e=>{if(e.target===dialog.current)dialog.current?.close()}}><div className="dialog-inner"><p className="eyebrow">THE RAINLIT CAFÉ</p><h2 id="about-title" tabIndex={-1}>有些等待，<br/>是為了好好告別。</h2><div className="about-copy"><p>母親過世後，你回到停業七年的咖啡館。<br/>燈還亮著，似乎仍有人在等。</p><p>探索店裡留下的物件，聽客人說話，慢慢拼起那些你未曾知道的日常。</p><p className="content-note">故事包含親人離世與詭異情節。<br/>目前可體驗雨蓉的故事，以及接續的陳伯安完整故事。自由對話由 AI 演出，進度會保存於此瀏覽器的專屬存檔。完整遊戲尚在製作。</p></div><form method="dialog"><button className="close">回到咖啡館 <ArrowIcon/></button></form></div></dialog>
  </main>
 }

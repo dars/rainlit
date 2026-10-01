@@ -4,6 +4,11 @@ import type {Action,Snapshot} from '../game/types';
 export function sceneSpots(game:Snapshot){
  const s=game.state;
  const available=(action:Action)=>game.choices.some(c=>c.action===action);
+ if(s.ownerPhase)return [
+  {id:'door',name:'店門',x:59,y:38,text:'門外仍是雨夜。今晚店裡還有客人。',action:'player_leave' as Action,label:'試著離開咖啡館'},
+  {id:'menu',name:'菜單',x:40,y:77,text:'舊菜單放在桌上，老先生的手輕輕壓著封面。桌上沒有飲料。',action:available('owner_memory')?'owner_memory' as Action:undefined,label:'問他以前是否在這裡工作'},
+  {id:'counter',name:'吧台',x:85,y:42,text:'吧台下那格放過書包的櫃子，還留在原來的位置。',action:available('owner_memory')?'owner_memory' as Action:available('owner_regret')?'owner_regret' as Action:undefined,label:available('owner_memory')?'聊起放學後的回憶':'問起那把備用鑰匙'},
+ ];
  return [
   {id:'door',name:'店門',x:67,y:42,text:'門外仍是雨夜。店裡還有客人留著。',action:'player_leave' as Action,label:'試著離開咖啡館'},
   {id:'window',name:'雨窗',x:18,y:38,text:'雨水沿著玻璃往下滑，窗外只有模糊的街燈。今晚的雨，似乎沒有要停的意思。',action:available('weather')?'weather' as Action:undefined,label:'和她聊聊這場雨'},
@@ -55,7 +60,7 @@ export default function SceneExplore({game,disabled,selected,onSelect}:{game:Sna
  onPointerUp={e=>{if(drag.current?.id===e.pointerId){drag.current=null;if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);}}}
  onPointerCancel={()=>{drag.current=null;}}
  onClickCapture={e=>{if(suppressClick.current){e.preventDefault();e.stopPropagation();suppressClick.current=false;}}}>
- {travel>1&&<div className="pan-controls"><span>左右拖曳，環顧店裡</span><button disabled={disabled} onClick={()=>setPan(null)}>回到雨蓉</button><button disabled={disabled} aria-label="向窗邊看" onClick={()=>setPan(0)}>窗邊</button><button disabled={disabled} aria-label="向吧台看" onClick={()=>setPan(Math.max(0,Math.min(1,(1672*scale*.85-frame.width*.6)/travel)))}>吧台</button></div>}
+ {travel>1&&<div className="pan-controls"><span>左右拖曳，環顧店裡</span><button disabled={disabled} onClick={()=>setPan(null)}>{game.state.ownerPhase?'回到陳伯安':'回到雨蓉'}</button><button disabled={disabled} aria-label="向窗邊看" onClick={()=>setPan(0)}>窗邊</button><button disabled={disabled} aria-label="向吧台看" onClick={()=>setPan(Math.max(0,Math.min(1,(1672*scale*.85-frame.width*.6)/travel)))}>吧台</button></div>}
   {frame.width>0&&sceneSpots(game).map(p=>{
    const x=offsetX+p.x/100*1672*scale,y=offsetY+p.y/100*941*scale;
    if(x<22||x>frame.width-22||y<22||y>frame.height-22)return null;
