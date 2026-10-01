@@ -41,3 +41,25 @@ npm run dev
 開啟 http://localhost:3000 。`npm run build` 檢查正式建置。首頁設計與素材來源見 [首頁試作](docs/homepage-design.md)。
 
 互動 API 本機開發：另一個終端執行 `npm run dev:api`，先執行 `npx wrangler d1 migrations apply rainlit-game --local`。`.dev.vars` 設定 OPENAI_API_KEY 與 ALLOWED_ORIGIN=http://127.0.0.1:3000；不要提交金鑰。
+
+
+## Codex 雲端開發
+
+在 Codex 的 **Work in → Cloud → Create environment** 選取 `dars/rainlit`，
+使用 Node.js 22，允許 Package managers 網路存取，並在 repo 根目錄執行：
+
+```sh
+bash scripts/setup-codex-cloud.sh
+```
+
+這會依照 lockfile 安裝套件、檢查型別、執行四個不需要網路 API 的劇情測試，
+並建置 Next.js。基本設定不需要金鑰。環境設定助手確認成功後，選取 **Publish**，
+再從已發布的環境建立任務。
+
+前端預覽使用 `npm run dev`。遊戲互動需要另外啟動本機 API 與初始化本機資料庫，
+請依上方「本機預覽」設定；自由對話還需要 `OPENAI_API_KEY`。
+金鑰透過雲端環境的秘密設定提供，不要提交 `.env.local` 或 `.dev.vars`。
+API 整合測試需要運行中的 API，未包含在上述基本檢查中。
+
+雲端環境建立流程：
+https://learn.chatgpt.com/docs/environments/cloud-environments
